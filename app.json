@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Climapp",
-    "slug": "Climapp",
+    "slug": "climap",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -38,11 +38,19 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "566f9cad-7690-433b-b92d-c76faab8f484"
+      }
+    },
+    "owner": "losck"
   }
 }
