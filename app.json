@@ -51,6 +51,12 @@
         "projectId": "566f9cad-7690-433b-b92d-c76faab8f484"
       }
     },
-    "owner": "losck"
+    "owner": "losck",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/566f9cad-7690-433b-b92d-c76faab8f484"
+    }
   }
 }
