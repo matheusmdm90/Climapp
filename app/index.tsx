@@ -3,13 +3,14 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const router = useRouter();
 
   return (
     <SafeAreaProvider>
+      <SafeAreaView edges={["top"]} />
       <LinearGradient colors={["#00457d", "#05051f"]} style={styles.container}>
         <Image source={require("../assets/images/Logo.png")} />
         <Image source={require("../assets/images/Ilustra.png")} />
