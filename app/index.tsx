@@ -10,8 +10,8 @@ export default function Index() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView edges={["top"]} />
       <LinearGradient colors={["#00457d", "#05051f"]} style={styles.container}>
+        <SafeAreaView edges={["top"]} />
         <Image source={require("../assets/images/Logo.png")} />
         <Image source={require("../assets/images/Ilustra.png")} />
         <Text style={styles.title}>Boas Vindas!</Text>

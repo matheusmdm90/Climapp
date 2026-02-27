@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import citiesData from "../data/cities.json";
 
 const Cities = () => {
@@ -28,6 +29,7 @@ const Cities = () => {
 
   return (
     <LinearGradient colors={["#00457d", "#05051f"]} style={styles.container}>
+      <SafeAreaView edges={["top"]} />
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Digite a cidade"

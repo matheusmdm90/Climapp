@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const CityDetails = () => {
   const searchParams = useLocalSearchParams();
@@ -48,6 +49,7 @@ const CityDetails = () => {
 
   return (
     <LinearGradient colors={["#00457d", "#05051f"]} style={styles.container}>
+      <SafeAreaView edges={["top"]} />
       <View style={styles.headerContainer}>
         <Pressable onPress={() => router.back()} style={styles.headerIcon}>
           <MaterialIcons name="chevron-left" size={24} color="white" />
