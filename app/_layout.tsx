@@ -6,6 +6,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/montserrat";
 import { Stack } from "expo-router";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -19,10 +20,12 @@ export default function RootLayout() {
     return null;
   }
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="Cities" options={{ headerShown: false }} />
-      <Stack.Screen name="[cityName]" options={{ headerShown: false }} />
-    </Stack>
+    <SafeAreaProvider style={{ flex: 1 }}>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="Cities" options={{ headerShown: false }} />
+        <Stack.Screen name="[cityName]" options={{ headerShown: false }} />
+      </Stack>
+    </SafeAreaProvider>
   );
 }

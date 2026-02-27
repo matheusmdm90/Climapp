@@ -3,27 +3,25 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const router = useRouter();
 
   return (
-    <SafeAreaProvider>
-      <LinearGradient colors={["#00457d", "#05051f"]} style={styles.container}>
-        <SafeAreaView edges={["top"]} />
-        <Image source={require("../assets/images/Logo.png")} />
-        <Image source={require("../assets/images/Ilustra.png")} />
-        <Text style={styles.title}>Boas Vindas!</Text>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => router.push("/Cities")}
-        >
-          <Text style={styles.textbtn}>Entrar</Text>
-          <MaterialIcons name="arrow-forward" size={24} color="#01080E" />
-        </TouchableOpacity>
-      </LinearGradient>
-    </SafeAreaProvider>
+    <LinearGradient colors={["#00457d", "#05051f"]} style={styles.container}>
+      <SafeAreaView edges={["top"]} />
+      <Image source={require("../assets/images/Logo.png")} />
+      <Image source={require("../assets/images/Ilustra.png")} />
+      <Text style={styles.title}>Boas Vindas!</Text>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={() => router.push("/Cities")}
+      >
+        <Text style={styles.textbtn}>Entrar</Text>
+        <MaterialIcons name="arrow-forward" size={24} color="#01080E" />
+      </TouchableOpacity>
+    </LinearGradient>
   );
 }
 
@@ -32,8 +30,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 64,
-    paddingVertical: 79,
+    gap: 30,
+
     paddingHorizontal: 32,
   },
 

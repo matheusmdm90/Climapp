@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingTop: 40,
     gap: 40,
   },
 
@@ -211,7 +210,8 @@ const styles = StyleSheet.create({
 
   boxContainerPrevision: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
+    gap: 8,
   },
 
   boxPrevision: {
