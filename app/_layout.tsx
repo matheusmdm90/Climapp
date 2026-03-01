@@ -1,3 +1,4 @@
+import { AppProvide } from "@/Context/Context";
 import {
   Montserrat_400Regular,
   Montserrat_500Medium,
@@ -21,11 +22,13 @@ export default function RootLayout() {
   }
   return (
     <SafeAreaProvider style={{ flex: 1 }}>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="Cities" options={{ headerShown: false }} />
-        <Stack.Screen name="[cityName]" options={{ headerShown: false }} />
-      </Stack>
+      <AppProvide>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="Cities" options={{ headerShown: false }} />
+          <Stack.Screen name="[cityName]" options={{ headerShown: false }} />
+        </Stack>
+      </AppProvide>
     </SafeAreaProvider>
   );
 }

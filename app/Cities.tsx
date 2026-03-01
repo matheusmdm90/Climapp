@@ -1,8 +1,10 @@
+import { appContext } from "@/Context/Context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -12,59 +14,110 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import citiesData from "../data/cities.json";
+
+interface AppContextType {
+  estadosBrasileiros: string[];
+}
+
+interface Cidade {
+  cidade: string;
+  temperatura: any;
+}
 
 const Cities = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const API_KEY = "c04de45af262752ba2ebe9e64736dbe5";
+  const [cidadeAtualizada, setCidadeAtualizada] = useState<Cidade[]>([]);
+  const { estadosBrasileiros } = useContext(appContext) as AppContextType;
   const router = useRouter();
   const [search, setSearch] = useState("");
-  const [filteredCities, setFilteredCities] = useState(citiesData);
+  const [filteredCities, setFilteredCities] =
+    useState<Cidade[]>(cidadeAtualizada);
 
   useEffect(() => {
-    const newFilteredCities = citiesData.filter((city) =>
-      city.city.toLowerCase().includes(search.toLowerCase()),
+    const renderizarCidades = async () => {
+      setIsLoading(true);
+      const dataCidade = [];
+      for (const estado of estadosBrasileiros) {
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${estado},BR&appid=${API_KEY}&units=metric&lang=pt_br`;
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          const cidade = {
+            cidade: estado,
+            temperatura: Math.round(data.main.temp),
+          };
+
+          dataCidade.push(cidade);
+        } catch (error) {
+          console.error("Erro ao obter os dados para", estado, ":", error);
+        }
+      }
+      setCidadeAtualizada(dataCidade);
+      setIsLoading(false);
+    };
+    renderizarCidades();
+  }, []);
+
+  useEffect(() => {
+    const newFilteredCities = cidadeAtualizada.filter((city) =>
+      city.cidade.toLowerCase().includes(search.toLowerCase()),
     );
 
     setFilteredCities(newFilteredCities);
-  }, [search]);
+  }, [search, cidadeAtualizada]);
 
   return (
     <LinearGradient colors={["#00457d", "#05051f"]} style={styles.container}>
       <SafeAreaView edges={["top"]} />
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Digite a cidade"
-          placeholderTextColor={"#fff"}
-          value={search}
-          onChangeText={(value) => setSearch(value)}
-          style={styles.input}
-        />
-        <MaterialIcons name="search" size={18} color="#fff" />
-      </View>
 
-      <ScrollView>
-        <View style={styles.scrollList}>
-          {filteredCities.map((city) => (
-            <TouchableOpacity
-              onPress={() => {
-                router.push(`/${city.city}`);
-              }}
-              key={city.city}
-              style={styles.listItem}
-            >
-              <Image
-                style={styles.cityImage}
-                source={require("../assets/images/Vector.png")}
-              ></Image>
-
-              <Text style={styles.cityName}>
-                {" "}
-                {city.city.replace(", ", " - ")}
-              </Text>
-              <Text style={styles.cityTemp}>{city.temp}º</Text>
-            </TouchableOpacity>
-          ))}
+      {isLoading ? (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" color="#fff" />
         </View>
-      </ScrollView>
+      ) : (
+        <>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Digite a cidade"
+              placeholderTextColor={"#fff"}
+              value={search}
+              onChangeText={(value) => setSearch(value)}
+              style={styles.input}
+            />
+            <MaterialIcons name="search" size={18} color="#fff" />
+          </View>
+
+          <ScrollView>
+            <View style={styles.scrollList}>
+              {filteredCities.map((city) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    router.push(`/${city.cidade}`);
+                  }}
+                  key={city.cidade}
+                  style={styles.listItem}
+                >
+                  <Image
+                    style={styles.cityImage}
+                    source={require("../assets/images/Vector.png")}
+                  ></Image>
+
+                  <Text style={styles.cityName}>
+                    {" "}
+                    {city.cidade.replace(", ", " - ")}
+                  </Text>
+                  <Text style={styles.cityTemp}>{city.temperatura}º</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
+        </>
+      )}
     </LinearGradient>
   );
 };

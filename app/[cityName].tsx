@@ -6,6 +6,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const CityDetails = () => {
+  const API_KEY = "c04de45af262752ba2ebe9e64736dbe5";
   const searchParams = useLocalSearchParams();
   const [cityAtual, setCityAtual] = useState<{
     city: string;
@@ -22,18 +23,42 @@ const CityDetails = () => {
   } | null>(null);
 
   const handleData = async () => {
+    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${searchParams.cityName},BR&appid=${API_KEY}&units=metric&lang=pt_br`;
     try {
       // aqui estou fazendo uma requisição para a APi
-      const response = await fetch("https://climapp-api.vercel.app/api");
+      const response = await fetch(url);
 
       //   aqui preciso  transformar a resposta da api em json para poder usar os dados
-      const responseJson = await response.json();
+      const data = await response.json();
 
-      const city = responseJson.find(
-        (cityData: { city: string | string[] }) =>
-          cityData.city === searchParams.cityName,
-      );
-      setCityAtual(city);
+      console.log(data);
+      const cityData = {
+        city: data.city.name,
+        date: new Date(data.list[0].dt * 1000).toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+        }),
+        temp: Math.round(data.list[0].main.temp),
+        description: data.list[0].weather[0].description,
+        humidity: data.list[0].main.humidity,
+        forecast: data.list.slice(0, 25).map((item: any) => ({
+          min: Math.round(item.main.temp_min),
+          max: Math.round(item.main.temp_max),
+          date: new Date(item.dt * 1000).toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "2-digit",
+          }),
+          weekday: new Date(item.dt * 1000).toLocaleDateString("pt-BR", {
+            weekday: "short",
+          }),
+        })),
+      };
+
+      setCityAtual(cityData);
+
+      console.log(searchParams);
     } catch (e) {
       console.log(e);
     }
@@ -43,7 +68,9 @@ const CityDetails = () => {
     handleData();
   }, []);
 
-  const limitedCityName = cityAtual?.forecast.slice(1, 4);
+  const limitedCityName = cityAtual?.forecast.filter((_, index) =>
+    [5, 13, 21].includes(index),
+  );
 
   const router = useRouter();
 
