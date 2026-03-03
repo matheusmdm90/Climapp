@@ -26,7 +26,7 @@ interface Cidade {
 
 const Cities = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const API_KEY = "c04de45af262752ba2ebe9e64736dbe5";
+  const API_KEY = "chave_Api_aqui";
   const [cidadeAtualizada, setCidadeAtualizada] = useState<Cidade[]>([]);
   const { estadosBrasileiros } = useContext(appContext) as AppContextType;
   const router = useRouter();
@@ -39,6 +39,7 @@ const Cities = () => {
       setIsLoading(true);
       const dataCidade = [];
       for (const estado of estadosBrasileiros) {
+        // aqui estamos usando a API do OpenWeatherMap para obter os dados de temperatura para cada cidade
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${estado},BR&appid=${API_KEY}&units=metric&lang=pt_br`;
 
         try {
@@ -60,6 +61,8 @@ const Cities = () => {
     };
     renderizarCidades();
   }, []);
+
+  // aqui estamos usando o useEffect para filtrar as cidades com base no valor de pesquisa e atualizar a lista de cidades filtradas sempre que o valor de pesquisa ou a lista de cidades atualizada mudar
 
   useEffect(() => {
     const newFilteredCities = cidadeAtualizada.filter((city) =>
@@ -96,6 +99,7 @@ const Cities = () => {
             <View style={styles.scrollList}>
               {filteredCities.map((city) => (
                 <TouchableOpacity
+                  // aqui estamos usando o router do Expo para navegar para a página de detalhes da cidade quando o usuário clicar em uma cidade na lista, passando o nome da cidade como parâmetro na URL
                   onPress={() => {
                     router.push(`/${city.cidade}`);
                   }}

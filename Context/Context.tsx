@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
 
+// desidi cria um contexto global para praticar o uso do contexto no React, onde podemos armazenar e compartilhar dados que são necessários em várias partes do aplicativo, como a lista de estados brasileiros, evitando a necessidade de passar esses dados como props por vários níveis de componentes.
 interface appProvidets {
   children: React.ReactNode;
 }
@@ -37,14 +38,10 @@ export const AppProvide = ({ children }: appProvidets) => {
     "Tocantins",
   ];
 
-  const [estadoAtual, setEstadoAtual] = useState("");
-
   return (
     <appContext.Provider
       value={{
         estadosBrasileiros,
-        estadoAtual,
-        setEstadoAtual,
       }}
     >
       {children}

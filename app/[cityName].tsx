@@ -6,7 +6,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const CityDetails = () => {
-  const API_KEY = "c04de45af262752ba2ebe9e64736dbe5";
+  const API_KEY = "Chave_Api_aqui";
   const searchParams = useLocalSearchParams();
   const [cityAtual, setCityAtual] = useState<{
     city: string;
@@ -23,6 +23,7 @@ const CityDetails = () => {
   } | null>(null);
 
   const handleData = async () => {
+    // aqui estou criando a url para fazer a requisição para a API, usando o nome da cidade que vem dos parametros de busca
     const url = `https://api.openweathermap.org/data/2.5/forecast?q=${searchParams.cityName},BR&appid=${API_KEY}&units=metric&lang=pt_br`;
     try {
       // aqui estou fazendo uma requisição para a APi
@@ -34,6 +35,7 @@ const CityDetails = () => {
       console.log(data);
       const cityData = {
         city: data.city.name,
+        // aqui estou convertendo a data que vem em formato timestamp para uma data legivel, usando a função toLocaleDateString para formatar a data no formato dia/mes/ano
         date: new Date(data.list[0].dt * 1000).toLocaleDateString("pt-BR", {
           day: "2-digit",
           month: "2-digit",
@@ -57,8 +59,6 @@ const CityDetails = () => {
       };
 
       setCityAtual(cityData);
-
-      console.log(searchParams);
     } catch (e) {
       console.log(e);
     }
@@ -118,6 +118,7 @@ const CityDetails = () => {
       </View>
 
       <View style={styles.boxContainerPrevision}>
+        {/* Aqui e a rederização dos proximos dias  */}
         {limitedCityName?.map((item, index) => {
           const week = (index === 0 && "Amanhã") || item.weekday;
 

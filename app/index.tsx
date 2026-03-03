@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const router = useRouter();
+  // tela Inicial do aplicativo, onde temos um layout simples com um gradiente de fundo, uma imagem de logo, uma ilustração e um botão para entrar no aplicativo. O botão usa o router do Expo para navegar para a página de cidades quando clicado. O SafeAreaView é usado para garantir que o conteúdo seja exibido corretamente em dispositivos com entalhes ou áreas de recorte.
 
   return (
     <LinearGradient colors={["#00457d", "#05051f"]} style={styles.container}>
