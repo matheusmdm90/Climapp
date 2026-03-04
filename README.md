@@ -29,7 +29,8 @@ Você pode visualizar o aplicativo também pelo build do próprio Expo, direto n
 Aqui está o QR Code do projeto. Basta escanear após instalar o Expo Go: 
 <br/>
 <br/>
-<img width="250" height="250" alt="image" src="https://github.com/user-attachments/assets/7457d60c-5539-4831-b28c-badd0abd2c78" />
+<img width="250" height="249" alt="image" src="https://github.com/user-attachments/assets/47e96188-73f7-469d-b5c5-41afdf707b32" />
+
 
 
 ## Contato:
