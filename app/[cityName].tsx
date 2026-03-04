@@ -6,7 +6,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const CityDetails = () => {
-  const API_KEY = "Chave_Api_aqui";
+  const API_KEY = "sua_chave_api_aqui"; // Substitua pela sua chave de API do OpenWeatherMap
   const searchParams = useLocalSearchParams();
   const [cityAtual, setCityAtual] = useState<{
     city: string;
@@ -32,7 +32,6 @@ const CityDetails = () => {
       //   aqui preciso  transformar a resposta da api em json para poder usar os dados
       const data = await response.json();
 
-      console.log(data);
       const cityData = {
         city: data.city.name,
         // aqui estou convertendo a data que vem em formato timestamp para uma data legivel, usando a função toLocaleDateString para formatar a data no formato dia/mes/ano
@@ -64,6 +63,7 @@ const CityDetails = () => {
     }
   };
 
+  // aqui estou usando o useEffect para chamar a função handleData quando o componente for montado, para que os dados da cidade sejam carregados assim que o usuário acessar a página
   useEffect(() => {
     handleData();
   }, []);
@@ -135,9 +135,7 @@ const CityDetails = () => {
                 source={require("../assets/images/Vector.png")}
                 style={styles.imagePrevision}
               />
-              <Text style={styles.templePrevision}>
-                {item.max}° / {item.min}°
-              </Text>
+              <Text style={styles.templePrevision}>{item.max}°</Text>
             </View>
           );
         })}

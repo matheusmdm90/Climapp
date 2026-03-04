@@ -26,7 +26,7 @@ interface Cidade {
 
 const Cities = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const API_KEY = "chave_Api_aqui";
+  const API_KEY = "sua_chave_api_aqui"; // Substitua pela sua chave de API do OpenWeatherMap
   const [cidadeAtualizada, setCidadeAtualizada] = useState<Cidade[]>([]);
   const { estadosBrasileiros } = useContext(appContext) as AppContextType;
   const router = useRouter();
